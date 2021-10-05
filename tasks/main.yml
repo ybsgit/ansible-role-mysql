@@ -1,0 +1,25 @@
+---
+# tasks file for mysql_db
+    - name: "Install and Configure Database"
+      apt: 
+        pkg: 
+          - mysql-server
+          - mysql-client
+        update_cache: yes
+
+    - name: "Start Database Service"
+      service:
+         name: mysql
+         state: started
+
+    - name: "Create database"
+      mysql_db:
+        name: "{{ db_name }}"
+        state: present 
+
+    - name: Create database user 
+      mysql_user:
+        name: "{{ db_user }}"
+        password: "{{ db_pass }}"
+        priv: '*.*:ALL'
+        state: present
